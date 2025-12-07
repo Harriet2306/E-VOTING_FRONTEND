@@ -281,7 +281,7 @@ const Login: React.FC<LoginProps> = ({
 
             <div className="mt-6 pt-6 border-t border-card-stroke">
               <div className="text-center space-y-3">
-                {role === 'CANDIDATE' && (
+                {(selectedRole === 'CANDIDATE' || role === 'CANDIDATE') && (
                   <Button
                     type="button"
                     variant="secondary"

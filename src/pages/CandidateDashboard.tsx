@@ -30,7 +30,7 @@ const CandidateDashboard: React.FC = () => {
   const [welcomeMessage, setWelcomeMessage] = useState<string | null>(null);
   const [nominations, setNominations] = useState<Nomination[]>([]);
   const [loading, setLoading] = useState(true);
-  const [showForm, setShowForm] = useState(false);
+  const [showForm, setShowForm] = useState(true);
 
   useEffect(() => {
     // Check for welcome message from login
@@ -60,7 +60,10 @@ const CandidateDashboard: React.FC = () => {
     try {
       const data = await candidatesAPI.getMyNominations();
       setNominations(data);
-      if (data.length === 0) {
+      // If they already have nominations, hide the form to show the list
+      if (data.length > 0) {
+        setShowForm(false);
+      } else {
         setShowForm(true);
       }
     } catch (error) {
