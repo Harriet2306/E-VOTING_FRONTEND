@@ -2,15 +2,20 @@ import axios from 'axios';
 
 // API Base URL - Use localhost for development
 function getApiBaseUrl(): string {
+  // 1. Check runtime override (Browser Console: localStorage.setItem('VITE_API_URL', 'https://...'))
+  const storedUrl = typeof localStorage !== 'undefined' ? localStorage.getItem('VITE_API_URL') : null;
+  if (storedUrl) {
+    console.log('[api.ts] Using localStorage Override:', storedUrl);
+    return storedUrl;
+  }
+
+  // 2. Check Build-time Environment Variable
   if (import.meta.env.VITE_API_URL) {
-    console.log('[api.ts] Using VITE_API_URL:', import.meta.env.VITE_API_URL);
     return import.meta.env.VITE_API_URL;
   }
-  
-  // Default to localhost
-  const localUrl = 'http://localhost:5000/api';
-  console.log('[api.ts] Using localhost:', localUrl);
-  return localUrl;
+
+  // 3. Default to localhost
+  return 'http://localhost:5000/api';
 }
 
 const API_BASE_URL = getApiBaseUrl();
@@ -64,7 +69,7 @@ api.interceptors.response.use(
       // Clear invalid token
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      
+
       // Show user-friendly error message
       if (errorMessage.includes('Invalid or inactive user') || errorMessage.includes('Invalid token') || errorMessage.includes('Token expired')) {
         // Redirect to login with message
@@ -73,13 +78,13 @@ api.interceptors.response.use(
         }, 100);
         return Promise.reject(new Error('Your session has expired. Please log in again.'));
       }
-      
+
       // Don't redirect if it's an account deactivation - let the component handle it
       if (errorMessage.includes('inactive') || errorMessage.includes('deactivated')) {
         // Keep user in localStorage so ProtectedRoute can show deactivation message
         return Promise.reject(error);
       }
-      
+
       // For other 401 errors, redirect to login
       setTimeout(() => {
         window.location.href = '/login';
