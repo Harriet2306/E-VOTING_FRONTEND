@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-// import { Button } from '../ui/button';
 import Logo from '../ui/Logo';
 
 interface TopNavProps {
@@ -55,8 +54,8 @@ const TopNav: React.FC<TopNavProps> = ({ role }) => {
                     key={item.path}
                     onClick={() => navigate(item.path)}
                     className={`px-4 py-2 rounded-md font-medium transition-all duration-300 ${isActive
-                        ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/30'
-                        : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                      ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/30'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-muted'
                       }`}
                   >
                     <span className="mr-2">{item.icon}</span>

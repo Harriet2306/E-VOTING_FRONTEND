@@ -15,8 +15,6 @@ import { usersAPI, positionsAPI, candidatesAPI, votersAPI, reportsAPI } from '..
 import DashboardLayout from '../components/layout/DashboardLayout';
 
 const AdminDashboard: React.FC = () => {
-  // const navigate = useNavigate();
-  // const user = JSON.parse(localStorage.getItem('user') || '{}');
   const [welcomeMessage, setWelcomeMessage] = useState<string | null>(null);
   const [isCreateOfficerOpen, setIsCreateOfficerOpen] = useState(false);
   const [isOfficerDetailsOpen, setIsOfficerDetailsOpen] = useState(false);

@@ -27,8 +27,6 @@ interface Nomination {
 }
 
 const CandidateDashboard: React.FC = () => {
-  // const navigate = useNavigate();
-  // const user = JSON.parse(localStorage.getItem('user') || '{}');
   const [welcomeMessage, setWelcomeMessage] = useState<string | null>(null);
   const [nominations, setNominations] = useState<Nomination[]>([]);
   const [loading, setLoading] = useState(true);
