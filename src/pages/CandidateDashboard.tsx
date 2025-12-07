@@ -60,6 +60,9 @@ const CandidateDashboard: React.FC = () => {
     try {
       const data = await candidatesAPI.getMyNominations();
       setNominations(data);
+      if (data.length === 0) {
+        setShowForm(true);
+      }
     } catch (error) {
       console.error('Failed to fetch nominations:', error);
       toast.error('Failed to load nominations');
@@ -148,9 +151,11 @@ const CandidateDashboard: React.FC = () => {
                   <p className="text-sm text-muted-foreground mb-4">
                     No nominations submitted yet
                   </p>
-                  <Button onClick={() => setShowForm(true)}>
-                    Submit Your First Nomination
-                  </Button>
+                  {!showForm && (
+                    <Button onClick={() => setShowForm(true)}>
+                      Submit Your First Nomination
+                    </Button>
+                  )}
                 </div>
               ) : (
                 <div className="space-y-4">
