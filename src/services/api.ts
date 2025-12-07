@@ -24,6 +24,7 @@ const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
+    'ngrok-skip-browser-warning': 'true',
   },
   timeout: 30000, // 30 second timeout for all requests (increased for OTP requests)
 });
