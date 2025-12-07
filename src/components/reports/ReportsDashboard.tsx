@@ -91,41 +91,47 @@ const ReportsDashboard: React.FC = () => {
 
   // Prepare line chart data with candidates and "Not Voted"
   const lineChartData = selectedPositionData && turnoutData
-    ? [
-      ...selectedPositionData.candidates.map((candidate) => ({
+    ? (() => {
+      const maxVotes = Math.max(...selectedPositionData.candidates.map((c) => c.votes));
+      return [
+        ...selectedPositionData.candidates.map((candidate) => ({
+          name: candidate.name.length > 15
+            ? candidate.name.substring(0, 15) + '...'
+            : candidate.name,
+          fullName: candidate.name,
+          votes: candidate.votes,
+          percentage: candidate.votePercentage,
+          isWinner: candidate.votes > 0 && candidate.votes === maxVotes,
+          photoUrl: candidate.photoUrl,
+        })),
+        {
+          name: 'Not Voted',
+          fullName: 'Not Voted',
+          votes: turnoutData.nonVoters,
+          percentage: turnoutData.nonVoterPercentage,
+          isWinner: false,
+          photoUrl: null,
+        },
+      ];
+    })()
+    : [];
+
+  // Prepare line chart data with candidate photos for display
+  const candidatesWithPhotosData = selectedPositionData
+    ? (() => {
+      const maxVotes = Math.max(...selectedPositionData.candidates.map((c) => c.votes));
+      return selectedPositionData.candidates.map((candidate) => ({
         name: candidate.name.length > 15
           ? candidate.name.substring(0, 15) + '...'
           : candidate.name,
         fullName: candidate.name,
         votes: candidate.votes,
         percentage: candidate.votePercentage,
-        isWinner: candidate.isWinner,
+        isWinner: candidate.votes > 0 && candidate.votes === maxVotes,
         photoUrl: candidate.photoUrl,
-      })),
-      {
-        name: 'Not Voted',
-        fullName: 'Not Voted',
-        votes: turnoutData.nonVoters,
-        percentage: turnoutData.nonVoterPercentage,
-        isWinner: false,
-        photoUrl: null,
-      },
-    ]
-    : [];
-
-  // Prepare line chart data with candidate photos for display
-  const candidatesWithPhotosData = selectedPositionData
-    ? selectedPositionData.candidates.map((candidate) => ({
-      name: candidate.name.length > 15
-        ? candidate.name.substring(0, 15) + '...'
-        : candidate.name,
-      fullName: candidate.name,
-      votes: candidate.votes,
-      percentage: candidate.votePercentage,
-      isWinner: candidate.isWinner,
-      photoUrl: candidate.photoUrl,
-      candidateId: candidate.candidateId,
-    }))
+        candidateId: candidate.candidateId,
+      }));
+    })()
     : [];
 
   const CustomTooltip = ({ active, payload }: any) => {
