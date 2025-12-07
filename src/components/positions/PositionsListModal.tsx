@@ -26,7 +26,7 @@ interface PositionsListModalProps {
   onSuccess?: () => void;
 }
 
-const PositionsListModal: React.FC<PositionsListModalProps> = ({ isOpen, onClose, onPositionDeleted, onSuccess }) => {
+const PositionsListModal: React.FC<PositionsListModalProps> = ({ isOpen, onClose, onPositionDeleted }) => {
   const [positions, setPositions] = useState<Position[]>([]);
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState<string | null>(null);

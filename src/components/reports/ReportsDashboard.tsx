@@ -12,7 +12,6 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-  Cell,
 } from 'recharts';
 import { getFileUrl } from '../../lib/imageUtils';
 
@@ -93,39 +92,40 @@ const ReportsDashboard: React.FC = () => {
   // Prepare line chart data with candidates and "Not Voted"
   const lineChartData = selectedPositionData && turnoutData
     ? [
-        ...selectedPositionData.candidates.map((candidate) => ({
-          name: candidate.name.length > 15 
-            ? candidate.name.substring(0, 15) + '...' 
-            : candidate.name,
-          fullName: candidate.name,
-          votes: candidate.votes,
-          percentage: candidate.votePercentage,
-          isWinner: candidate.isWinner,
-          photoUrl: candidate.photoUrl,
-        })),
-        {
-          name: 'Not Voted',
-          fullName: 'Not Voted',
-          votes: turnoutData.nonVoters,
-          percentage: turnoutData.nonVoterPercentage,
-          isWinner: false,
-          photoUrl: null,
-        },
-      ]
-    : [];
-
-  // Prepare line chart data with candidate photos for display
-  const candidatesWithPhotosData = selectedPositionData
-    ? selectedPositionData.candidates.map((candidate) => ({
-        name: candidate.name.length > 15 
-          ? candidate.name.substring(0, 15) + '...' 
+      ...selectedPositionData.candidates.map((candidate) => ({
+        name: candidate.name.length > 15
+          ? candidate.name.substring(0, 15) + '...'
           : candidate.name,
         fullName: candidate.name,
         votes: candidate.votes,
         percentage: candidate.votePercentage,
         isWinner: candidate.isWinner,
         photoUrl: candidate.photoUrl,
-      }))
+      })),
+      {
+        name: 'Not Voted',
+        fullName: 'Not Voted',
+        votes: turnoutData.nonVoters,
+        percentage: turnoutData.nonVoterPercentage,
+        isWinner: false,
+        photoUrl: null,
+      },
+    ]
+    : [];
+
+  // Prepare line chart data with candidate photos for display
+  const candidatesWithPhotosData = selectedPositionData
+    ? selectedPositionData.candidates.map((candidate) => ({
+      name: candidate.name.length > 15
+        ? candidate.name.substring(0, 15) + '...'
+        : candidate.name,
+      fullName: candidate.name,
+      votes: candidate.votes,
+      percentage: candidate.votePercentage,
+      isWinner: candidate.isWinner,
+      photoUrl: candidate.photoUrl,
+      candidateId: candidate.candidateId,
+    }))
     : [];
 
   const CustomTooltip = ({ active, payload }: any) => {
@@ -149,20 +149,6 @@ const ReportsDashboard: React.FC = () => {
     return null;
   };
 
-  const CustomLabel = (props: any) => {
-    const { x, y, payload } = props;
-    const data = payload.payload;
-    
-    if (data.name === 'Not Voted') {
-      return (
-        <text x={x} y={y} dy={-10} fill={COLORS.danger} fontSize={12} fontWeight="bold" textAnchor="middle">
-          {data.name}
-        </text>
-      );
-    }
-    
-    return null;
-  };
 
   if (loading) {
     return (
@@ -300,7 +286,7 @@ const ReportsDashboard: React.FC = () => {
                       tick={{ fill: '#6B7280' }}
                       label={{ value: 'Votes', angle: -90, position: 'insideLeft', fill: '#6B7280' }}
                     />
-                    <Tooltip 
+                    <Tooltip
                       content={({ active, payload }) => {
                         if (active && payload && payload.length) {
                           const data = payload[0].payload;
@@ -347,11 +333,10 @@ const ReportsDashboard: React.FC = () => {
                   {candidatesWithPhotosData.map((candidate, index) => (
                     <div
                       key={candidate.candidateId || index}
-                      className={`text-center p-3 rounded-xl border-2 transition-all duration-300 ${
-                        candidate.isWinner
-                          ? 'border-primary bg-primary-light shadow-md'
-                          : 'border-card-stroke bg-surface hover:shadow-md'
-                      }`}
+                      className={`text-center p-3 rounded-xl border-2 transition-all duration-300 ${candidate.isWinner
+                        ? 'border-primary bg-primary-light shadow-md'
+                        : 'border-card-stroke bg-surface hover:shadow-md'
+                        }`}
                     >
                       {candidate.photoUrl ? (
                         <img
@@ -369,9 +354,8 @@ const ReportsDashboard: React.FC = () => {
                         />
                       ) : null}
                       <div
-                        className={`w-20 h-20 mx-auto mb-2 rounded-full border-2 border-primary/30 shadow-sm bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center text-primary-foreground font-bold text-xl ${
-                          candidate.photoUrl ? 'hidden' : 'flex'
-                        }`}
+                        className={`w-20 h-20 mx-auto mb-2 rounded-full border-2 border-primary/30 shadow-sm bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center text-primary-foreground font-bold text-xl ${candidate.photoUrl ? 'hidden' : 'flex'
+                          }`}
                       >
                         {candidate.fullName.charAt(0).toUpperCase()}
                       </div>

@@ -9,7 +9,7 @@ import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import Logo from '../ui/Logo';
-import RegisterCandidate from '../candidates/RegisterCandidate';
+// import RegisterCandidate from '../candidates/RegisterCandidate';
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email address'),

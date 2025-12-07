@@ -1,5 +1,5 @@
 // Authored by: Treasure Kirabo
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
@@ -275,12 +275,12 @@ const VotingPage: React.FC = () => {
                 >
                   <div
                     className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all ${isActive
-                        ? 'bg-primary text-primary-foreground ring-4 ring-primary-light'
-                        : isVoted
-                          ? 'bg-primary-light text-primary-dark'
-                          : isCompleted
-                            ? 'bg-muted text-muted-foreground'
-                            : 'bg-surface border-2 border-card-stroke text-disabled'
+                      ? 'bg-primary text-primary-foreground ring-4 ring-primary-light'
+                      : isVoted
+                        ? 'bg-primary-light text-primary-dark'
+                        : isCompleted
+                          ? 'bg-muted text-muted-foreground'
+                          : 'bg-surface border-2 border-card-stroke text-disabled'
                       }`}
                   >
                     {isVoted ? '✓' : index + 1}
@@ -325,8 +325,8 @@ const VotingPage: React.FC = () => {
                       key={candidate.id}
                       onClick={() => handleVoteChange(currentPosition.id, candidate.id)}
                       className={`relative p-6 rounded-2xl border-2 transition-all text-left ${isSelected
-                          ? 'border-primary bg-primary-light shadow-lg scale-[1.02]'
-                          : 'border-card-stroke bg-surface hover:border-primary/50 hover:shadow-md'
+                        ? 'border-primary bg-primary-light shadow-lg scale-[1.02]'
+                        : 'border-card-stroke bg-surface hover:border-primary/50 hover:shadow-md'
                         }`}
                     >
                       {isSelected && (
@@ -390,8 +390,8 @@ const VotingPage: React.FC = () => {
                   onClick={handleSubmit}
                   disabled={submitting || votedCount !== totalPositions}
                   className={`${votedCount === totalPositions
-                      ? ''
-                      : 'bg-disabled text-disabled cursor-not-allowed'
+                    ? ''
+                    : 'bg-disabled text-disabled cursor-not-allowed'
                     }`}
                 >
                   {submitting ? 'Submitting...' : 'Submit Vote'}

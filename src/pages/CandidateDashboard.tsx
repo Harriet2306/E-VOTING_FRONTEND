@@ -1,6 +1,6 @@
 // Authored by: Rinda Joyce
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../components/ui/card';
 import { candidatesAPI } from '../services/api';
@@ -27,8 +27,8 @@ interface Nomination {
 }
 
 const CandidateDashboard: React.FC = () => {
-  const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  // const navigate = useNavigate();
+  // const user = JSON.parse(localStorage.getItem('user') || '{}');
   const [welcomeMessage, setWelcomeMessage] = useState<string | null>(null);
   const [nominations, setNominations] = useState<Nomination[]>([]);
   const [loading, setLoading] = useState(true);
