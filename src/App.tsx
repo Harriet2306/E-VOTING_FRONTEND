@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
@@ -14,30 +14,25 @@ import ReportsPage from './pages/ReportsPage';
 
 function App() {
   return (
-    <Router
-      future={{
-        v7_startTransition: true,
-        v7_relativeSplatPath: true,
-      }}
-    >
+    <Router>
       <Routes>
         {/* Home/Splash Page */}
         <Route path="/" element={<HomePage />} />
 
         {/* Single Login Page */}
         <Route path="/login" element={<LoginPage />} />
-        
+
         {/* Registration */}
         <Route path="/candidate/register" element={<RegisterCandidate />} />
-        
+
         {/* Password Reset */}
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
-        
+
         {/* Public voter routes */}
         <Route path="/verify" element={<VerificationPage />} />
         <Route path="/vote" element={<VotingPage />} />
-        
+
         {/* Protected Dashboard Routes */}
         <Route
           path="/admin/dashboard"
@@ -47,7 +42,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        
+
         <Route
           path="/admin/reports"
           element={
@@ -56,7 +51,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        
+
         <Route
           path="/officer/dashboard"
           element={
@@ -65,7 +60,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        
+
         <Route
           path="/candidate/dashboard"
           element={
@@ -74,7 +69,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        
+
         {/* Fallback to home */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
